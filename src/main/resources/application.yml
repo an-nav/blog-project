@@ -1,0 +1,12 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    database: mysql
+
+  profiles:
+    active: pro
