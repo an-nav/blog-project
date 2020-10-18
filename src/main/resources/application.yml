@@ -9,4 +9,6 @@ spring:
     database: mysql
 
   profiles:
-    active: pro
+    active: dev
+  resources:
+    add-mappings: true
