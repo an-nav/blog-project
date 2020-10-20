@@ -2,7 +2,7 @@ package com.anvna.blog.web.admin;
 
 import com.anvna.blog.po.User;
 import com.anvna.blog.service.UserService;
-import com.anvna.blog.service.UserServiceImpl;
+import com.anvna.blog.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +38,7 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session,
                         RedirectAttributes attributes){
-        User user = userService.checkUser(username, password);
+        User user = userService.checkUser(username, MD5Utils.encodeByMd5(password));
         if( user != null ){
             user.setPassword(null);
             session.setAttribute("user", user);

@@ -1,6 +1,8 @@
 package com.anvna.blog.po;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,9 @@ public class Type {
     @Id
     @GeneratedValue
     private Long id;
-    private String typeName;
+
+    @NotBlank(message = "分类不能为空")
+    private String name;
 
     @OneToMany(mappedBy = "type")
     private List<Blog> blogs = new ArrayList<>();
@@ -34,12 +38,12 @@ public class Type {
         this.id = id;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getName() {
+        return name;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Blog> getBlogs() {
@@ -55,7 +59,7 @@ public class Type {
     public String toString() {
         return "Type{" +
                 "id=" + id +
-                ", typeName='" + typeName + '\'' +
+                ", typeName='" + name + '\'' +
                 '}';
     }
 }

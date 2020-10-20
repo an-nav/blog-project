@@ -17,7 +17,7 @@ public class Tag {
     @Id
     @GeneratedValue
     private Long id;
-    private String tagName;
+    private String name;
 
     @ManyToMany(mappedBy = "tags")
     private List<Blog> blogs = new ArrayList<>();
@@ -33,12 +33,12 @@ public class Tag {
         this.id = id;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getName() {
+        return name;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Blog> getBlogs() {
@@ -53,7 +53,7 @@ public class Tag {
     public String toString() {
         return "Tags{" +
                 "id=" + id +
-                ", tagName='" + tagName + '\'' +
+                ", tagName='" + name + '\'' +
                 '}';
     }
 }
