@@ -1,6 +1,7 @@
 package com.anvna.blog.web.admin;
 
 import com.anvna.blog.po.Type;
+import com.anvna.blog.service.TypeService;
 import com.anvna.blog.service.impl.TypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ import javax.validation.Valid;
 public class TypeController {
 
     @Autowired
-    private TypeServiceImpl typeService;
+    private TypeService typeService;
 
     @GetMapping("/types")
     public String types(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,

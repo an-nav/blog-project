@@ -21,12 +21,16 @@ public class Blog {
     @GeneratedValue
     private Long id;
     private String title;
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    private String content;
     private String firstPicture;
     private String flag;
     private Integer views;
     private Boolean appreciation;
     private Boolean shareStatement;
     private Boolean commentable;
+    private Boolean published;
     private Boolean ifRecommend;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -48,7 +52,8 @@ public class Blog {
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
 
-
+    @Transient
+    private String tagIds;
 
     public Blog() {
     }
@@ -172,6 +177,51 @@ public class Blog {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
+    }
+
+    public void init(){
+        this.tagIds = tagsToIds(this.tags);
+    }
+
+    private String tagsToIds(List<Tag> tags){
+        if( tags.isEmpty() ){
+            return tagIds;
+        }
+        boolean flag = false;
+        StringBuffer sb = new StringBuffer();
+        for( Tag tag : tags ){
+            if( flag ){
+                sb.append(",");
+            }else{
+                flag = true;
+            }
+            sb.append(tag.getId());
+        }
+        return sb.toString();
     }
 
     @Override

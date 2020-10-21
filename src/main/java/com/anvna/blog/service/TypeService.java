@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @InterfaceName TypeService
  * @Description
@@ -50,5 +52,7 @@ public interface TypeService {
     void deleteType(Long id);
 
     Type getTypeByName(String name);
+
+    List<Type> listType();
 
 }

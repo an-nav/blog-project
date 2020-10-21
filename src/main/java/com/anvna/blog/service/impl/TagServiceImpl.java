@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -56,4 +58,31 @@ public class TagServiceImpl implements TagService {
     public Tag getTagByName(String name) {
         return tagRepository.findByName(name);
     }
+
+    @Override
+    public List<Tag> listTag() {
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public List<Tag> listTag(String ids) {
+        return tagRepository.findAllById(convertToList(ids));
+    }
+
+    /**
+     * 将 , 分隔的 ids 转换成 id list ie 1,2,3
+     * @param ids
+     * @return
+     */
+    private List<Long> convertToList(String ids){
+        List<Long> res = new ArrayList<>();
+        if( !"".equals(ids) && ids != null){
+            String[] split = ids.split(",");
+            for( String s : split ){
+                res.add(Long.parseLong(s));
+            }
+        }
+        return res;
+    }
+
 }

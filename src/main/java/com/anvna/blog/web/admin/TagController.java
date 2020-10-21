@@ -3,6 +3,7 @@ package com.anvna.blog.web.admin;
 
 import com.anvna.blog.po.Tag;
 
+import com.anvna.blog.service.TagService;
 import com.anvna.blog.service.impl.TagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ import javax.validation.Valid;
 public class TagController {
 
     @Autowired
-    private TagServiceImpl tagService;
+    private TagService tagService;
 
     @GetMapping("/tags")
     public String tags(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
