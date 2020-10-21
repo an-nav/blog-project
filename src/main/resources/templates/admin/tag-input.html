@@ -3,18 +3,18 @@
 <head th:replace="admin/_fragment :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>分类新增</title>
+    <title>标签新增</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
     <link rel="stylesheet" href="../../static/lib/editorMd/css/editormd.css">
     <link rel="stylesheet" href="../../static/css/nav.css">
 </head>
 <body>
     <!--导航-->
-    <nav th:replace="admin/_fragment :: menu(2)" class="ui inverted attached segment m-padded-tb-small m-shadow-small">
+    <nav th:replace="admin/_fragment :: menu(3)" class="ui inverted attached segment m-padded-tb-small m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">分类管理</h2>
-                <a href="#" class="m-item item m-mobile-hide"><i class="home icon "></i>博客</a>
+                <h2 class="ui teal header item">标签管理</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
                 <div class="right m-item m-mobile-hide menu">
@@ -40,8 +40,8 @@
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="ui right menu">
-                <a href="#" th:href="@{/admin/types/input}" class="active teal item">新增</a>
-                <a href="#" th:href="@{/admin/types}" class="teal item">列表</a>
+                <a href="#" th:href="@{/admin/tags/input}" class="active teal item">新增</a>
+                <a href="#" th:href="@{/admin/tags}" class="teal item">列表</a>
             </div>
         </div>
     </div>
@@ -52,13 +52,13 @@
 
     <div class="m_container-small m-padded-tb-big">
         <div class="ui container">
-            <form action="#" method="post"  th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})}" class="ui form">
+            <form action="#" method="post"  th:object="${tag}" th:action="*{id}==null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}" class="ui form">
                 <input type="hidden" name="id" th:value="*{id}">
                 <div class="required field">
                     <div class="field">
                         <div class="ui left input labeled">
-                            <div class="ui compact teal basic label">分类名称</div>
-                            <input type="text" name="name" placeholder="分类名称" th:value="*{name}" >
+                            <div class="ui compact teal basic label">标签名称</div>
+                            <input type="text" name="name" placeholder="标签名称" th:value="*{name}" >
                         </div>
                     </div>
 
@@ -144,7 +144,7 @@
                     identifier: 'name',
                     rules: [{
                         type: 'empty',
-                        prompt: '请输入分类名称'
+                        prompt: '请输入标签名称'
                     }]
                 }
             }

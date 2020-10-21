@@ -64,6 +64,4 @@ public class TypeServiceImpl implements TypeService {
         typeRepository.deleteById(id);
     }
 
-
-
 }

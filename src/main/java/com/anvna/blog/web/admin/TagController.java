@@ -1,7 +1,9 @@
 package com.anvna.blog.web.admin;
 
-import com.anvna.blog.po.Type;
-import com.anvna.blog.service.impl.TypeServiceImpl;
+
+import com.anvna.blog.po.Tag;
+
+import com.anvna.blog.service.impl.TagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,51 +19,44 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-/**
- * @ClassName TypeController
- * @Description
- * @Author an_vna
- * @Date 2020/10/20 21:44
- * @Version V1.0
- **/
 @Controller
 @RequestMapping("/admin")
-public class TypeController {
+public class TagController {
 
     @Autowired
-    private TypeServiceImpl typeService;
+    private TagServiceImpl tagService;
 
-    @GetMapping("/types")
-    public String types(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+    @GetMapping("/tags")
+    public String tags(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model){
 
-        model.addAttribute("page", typeService.listType(pageable));
-        return "admin/types";
+        model.addAttribute("page", tagService.listTag(pageable));
+        return "admin/tags";
     }
 
-    @GetMapping("/types/input")
+    @GetMapping("/tags/input")
     public String input(Model model){
-        model.addAttribute("type", new Type());
-        return "admin/type-input";
+        model.addAttribute("tag", new Tag());
+        return "admin/tag-input";
     }
 
-    @PostMapping("/types")
-    public String post(@Valid Type type, BindingResult result, RedirectAttributes attributes){
-        if( typeService.getTypeByName(type.getName()) != null ){
-            result.rejectValue("name", "nameError", "分类名称已存在!");
+    @PostMapping("/tags")
+    public String post(@Valid Tag tag, BindingResult result, RedirectAttributes attributes){
+        if( tagService.getTagByName(tag.getName()) != null ){
+            result.rejectValue("name", "nameError", "标签已存在!");
         }
         if( result.hasErrors() ){
-            return "admin/type-input";
+            return "admin/tag-input";
         }
 
-        Type t = typeService.saveType(type);
+        Tag t = tagService.saveTag(tag);
         if( t == null ){
             attributes.addFlashAttribute("message", "添加失败!");
         }else{
             attributes.addFlashAttribute("message", "添加成功!");
         }
 
-        return "redirect:/admin/types";
+        return "redirect:/admin/tags";
     }
 
     /**
@@ -70,44 +65,43 @@ public class TypeController {
      * @param model
      * @return
      */
-    @GetMapping("/types/{id}/input")
+    @GetMapping("/tags/{id}/input")
     public String editInput(@PathVariable Long id, Model model){
-        model.addAttribute("type", typeService.getType(id));
-        return "admin/type-input";
+        model.addAttribute("tag", tagService.getTag(id));
+        return "admin/tag-input";
     }
 
     /**
      *
-     * @param type
+     * @param tag
      * @param result
      * @param id
      * @param attributes
      * @return
      */
-    @PostMapping("/types/{id}")
-    public String editPost(@Valid Type type, BindingResult result, @PathVariable Long id,RedirectAttributes attributes){
-        if( typeService.getTypeByName(type.getName()) != null ){
-            result.rejectValue("name", "nameError", "分类已存在!");
+    @PostMapping("/tags/{id}")
+    public String editPost(@Valid Tag tag, BindingResult result, @PathVariable Long id,RedirectAttributes attributes){
+        if( tagService.getTagByName(tag.getName()) != null ){
+            result.rejectValue("name", "nameError", "分类名称已存在!");
         }
         if( result.hasErrors() ){
-            return "admin/type-input";
+            return "admin/tag-input";
         }
 
-        Type t = typeService.updateType(id, type);
+        Tag t = tagService.updateTag(id, tag);
         if( t == null ){
             attributes.addFlashAttribute("message", "更新失败!");
         }else{
             attributes.addFlashAttribute("message", "更新成功!");
         }
 
-        return "redirect:/admin/types";
+        return "redirect:/admin/tags";
     }
 
-    @GetMapping("/types/{id}/delete")
+    @GetMapping("/tags/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
-        typeService.deleteType(id);
+        tagService.deleteTag(id);
         attributes.addFlashAttribute("message", "删除成功!");
-        return "redirect:/admin/types";
+        return "redirect:/admin/tags";
     }
-
 }
