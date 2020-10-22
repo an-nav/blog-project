@@ -37,7 +37,6 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
-
     @Autowired
     private TypeService typeService;
     @Autowired
@@ -105,7 +104,7 @@ public class BlogController {
         return "admin/blogs-input";
     }
 
-    @GetMapping("/blog/{id}/delete")
+    @GetMapping("/blogs/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
         blogService.deleteBlog(id);
         attributes.addFlashAttribute("message", "删除成功!");

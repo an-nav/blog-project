@@ -4,6 +4,7 @@ import com.anvna.blog.NotFoundException;
 import com.anvna.blog.dao.TagRepository;
 import com.anvna.blog.po.Tag;
 import com.anvna.blog.service.TagService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,6 +67,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTag(String ids) {
+
         return tagRepository.findAllById(convertToList(ids));
     }
 
@@ -79,10 +81,20 @@ public class TagServiceImpl implements TagService {
         if( !"".equals(ids) && ids != null){
             String[] split = ids.split(",");
             for( String s : split ){
-                res.add(Long.parseLong(s));
+                if( StringUtils.isNumeric(s) ){
+                    res.add(Long.parseLong(s));
+                }else{
+                    res.add(getNewTagId(s));
+                }
             }
         }
         return res;
     }
 
+    private Long getNewTagId(String name){
+        Tag tag = new Tag();
+        tag.setName(name);
+        Tag save = tagRepository.save(tag);
+        return save.getId();
+    }
 }

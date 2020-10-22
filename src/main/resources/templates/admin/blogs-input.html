@@ -91,7 +91,7 @@
                         <div class="field">
                             <div class="ui left labeled action input">
                                 <label class="ui compact teal basic label">标签</label>
-                                <div class="ui fluid multiple search selection dropdown">
+                                <div class="ui tag fluid multiple search selection dropdown">
                                     <input type="hidden" name="tagIds" th:value="*{tagIds}">
                                     <i class="dropdown icon"></i>
                                     <div class="default text">标签</div>
@@ -102,7 +102,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--TODO ： 首图地址无法保存进数据库-->
                     <div class="required field">
                         <div class="ui left input labeled">
                             <div class="ui compact teal basic label">首图地址</div>
@@ -215,6 +214,12 @@
             $("[name='published']").val(true);
             $('#blog-form').submit();
         });
+
+        $('.ui.tag.dropdown')
+            .dropdown({
+                allowAdditions: true
+            })
+        ;
 
         $('.ui.form').form({
             fields: {

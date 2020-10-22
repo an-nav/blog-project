@@ -3,8 +3,10 @@ package com.anvna.blog.service.impl;
 import com.anvna.blog.NotFoundException;
 import com.anvna.blog.dao.BlogRepository;
 import com.anvna.blog.po.Blog;
+import com.anvna.blog.po.Tag;
 import com.anvna.blog.po.Type;
 import com.anvna.blog.service.BlogService;
+import com.anvna.blog.service.TagService;
 import com.anvna.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogRepository blogRepository;
+    @Autowired
+    private TagService tagService;
 
     @Override
     public Blog getBlog(Long id) {
