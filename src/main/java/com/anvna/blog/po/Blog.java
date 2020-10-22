@@ -26,6 +26,7 @@ public class Blog {
     private String content;
     private String firstPicture;
     private String flag;
+    private String description;
     private Integer views;
     private Boolean appreciation;
     private Boolean shareStatement;
@@ -36,6 +37,7 @@ public class Blog {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
 
     @ManyToOne()
     private Type type;
@@ -224,20 +226,35 @@ public class Blog {
         return sb.toString();
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Blog{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
                 ", firstPicture='" + firstPicture + '\'' +
                 ", flag='" + flag + '\'' +
+                ", description='" + description + '\'' +
                 ", views=" + views +
                 ", appreciation=" + appreciation +
                 ", shareStatement=" + shareStatement +
                 ", commentable=" + commentable +
+                ", published=" + published +
                 ", ifRecommend=" + ifRecommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
                 '}';
     }
 }

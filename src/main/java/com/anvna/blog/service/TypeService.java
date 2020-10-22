@@ -55,4 +55,6 @@ public interface TypeService {
 
     List<Type> listType();
 
+    List<Type> listType(Integer size);
+
 }

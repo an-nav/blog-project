@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @InterfaceName BlogService
  * @Description
@@ -32,6 +34,16 @@ public interface BlogService {
      */
     Page<Blog> listBlog(Pageable pageable, BlogQuery blog);
 
+    Page<Blog> listBlog(Pageable pageable);
+
+
+    /**
+     * 获取推荐博客列表
+     * @param size
+     * @return
+     */
+    List<Blog> listRecommendBlog(Integer size);
+
     /**
      * 新增 blog
      * @param blog
@@ -53,4 +65,10 @@ public interface BlogService {
      * @param id
      */
     void deleteBlog(Long id);
+
+    Page<Blog> listBlog(String query, Pageable pageable);
+
+    Blog getAndConvert(Long id);
+
+
 }

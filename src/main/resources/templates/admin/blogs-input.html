@@ -91,7 +91,7 @@
                         <div class="field">
                             <div class="ui left labeled action input">
                                 <label class="ui compact teal basic label">标签</label>
-                                <div class="ui tag fluid multiple search selection dropdown">
+                                <div class="ui fluid tag multiple search selection dropdown">
                                     <input type="hidden" name="tagIds" th:value="*{tagIds}">
                                     <i class="dropdown icon"></i>
                                     <div class="default text">标签</div>
@@ -107,7 +107,9 @@
                             <div class="ui compact teal basic label">首图地址</div>
                             <input type="text" name="firstPicture" th:value="*{firstPicture}" placeholder="首图引用地址">
                         </div>
-
+                    </div>
+                    <div class="required field">
+                        <textarea name="description" th:text="*{description}" placeholder="博客描述..." maxlength="200"></textarea>
                     </div>
 
                     <div class="inline fields">
@@ -249,6 +251,13 @@
                     rules: [{
                         type: 'empty',
                         prompt: '请输入首图地址'
+                    }]
+                },
+                description: {
+                    identifier: 'description',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入博客描述'
                     }]
                 }
             }

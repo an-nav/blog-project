@@ -83,9 +83,13 @@ public class BlogController {
         blog.setUser((User) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
-        // TODO : 在新增博客时能够同时新增标签
-        Blog b = blogService.saveBlog(blog);
-
+        Blog b;
+        // TODO: 解决 createTime 和 views 为空的问题
+        if( blog.getId() == null ){
+            b = blogService.saveBlog(blog);
+        }else{
+            b = blogService.updateBlog(blog.getId(), blog);
+        }
         if( b == null ){
             attributes.addFlashAttribute("message", "操作失败!");
         }else{
