@@ -21,3 +21,5 @@ spring:
     active: dev
   resources:
     add-mappings: true
+
+comment.avatar: /images/avatar.jpg

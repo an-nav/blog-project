@@ -30,10 +30,12 @@ public class Comment {
     private Blog blog;
 
     @OneToMany(mappedBy = "parent")
-    private List<Comment> replayComment = new ArrayList<>();
+    private List<Comment> replyComment = new ArrayList<>();
 
     @ManyToOne()
     private Comment parent;
+
+    private Boolean admin;
 
     public Comment() {
     }
@@ -94,12 +96,12 @@ public class Comment {
         this.blog = blog;
     }
 
-    public List<Comment> getReplayComment() {
-        return replayComment;
+    public List<Comment> getReplyComment() {
+        return replyComment;
     }
 
-    public void setReplayComment(List<Comment> replayComment) {
-        this.replayComment = replayComment;
+    public void setReplyComment(List<Comment> replyComment) {
+        this.replyComment = replyComment;
     }
 
     public Comment getParent() {
@@ -108,6 +110,14 @@ public class Comment {
 
     public void setParent(Comment parent) {
         this.parent = parent;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     @Override
@@ -119,6 +129,10 @@ public class Comment {
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", createTime=" + createTime +
+                ", blog=" + blog +
+                ", replyComment=" + replyComment +
+                ", parent=" + parent +
+                ", admin=" + admin +
                 '}';
     }
 }

@@ -121,6 +121,7 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findByQuery(query, pageable);
     }
 
+    @Transactional
     @Override
     public Blog getAndConvert(Long id) {
         Blog blog = blogRepository.getOne(id);
@@ -133,6 +134,7 @@ public class BlogServiceImpl implements BlogService {
         // 将 markdown 转换为 html
         String content = b.getContent();
         String s = MarkdownUtils.markdownToHtmlExtensions(content);
+        blogRepository.updateViews(id);
         b.setContent(s);
         return b;
     }
