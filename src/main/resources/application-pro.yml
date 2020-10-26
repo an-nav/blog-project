@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://139.198.189.177:3306/blog?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: bigdata
 
