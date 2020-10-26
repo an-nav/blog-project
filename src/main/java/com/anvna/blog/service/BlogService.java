@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @InterfaceName BlogService
@@ -70,5 +71,24 @@ public interface BlogService {
 
     Blog getAndConvert(Long id);
 
+    /**
+     * 根据 TagId 查询
+     * @param tagId
+     * @param pageable
+     * @return
+     */
+    Page<Blog> listBlog(Long tagId, Pageable pageable);
+
+    /**
+     * 回档 blog
+     * @return
+     */
+    Map<String, List<Blog>> archiveBlog();
+
+    /**
+     * 获取 blog 条数
+     * @return
+     */
+    Long countBlog();
 
 }

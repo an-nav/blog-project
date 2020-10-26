@@ -17,14 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -138,4 +133,33 @@ public class BlogServiceImpl implements BlogService {
         b.setContent(s);
         return b;
     }
+
+    @Override
+    public Page<Blog> listBlog(Long tagId, Pageable pageable) {
+        return blogRepository.findAll(new Specification<Blog>() {
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                // 关联表查询
+                Join join = root.join("tags");
+                return criteriaBuilder.equal(join.get("id"), tagId);
+            }
+        }, pageable);
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogRepository.findGroupYear();
+        // 保持插入顺序
+        Map<String, List<Blog>> yearBlogMap = new LinkedHashMap<>();
+        for (String year : years) {
+            yearBlogMap.put(year, blogRepository.findByYear(year));
+        }
+        return yearBlogMap;
+    }
+
+    @Override
+    public Long countBlog() {
+        return blogRepository.count();
+    }
+
 }

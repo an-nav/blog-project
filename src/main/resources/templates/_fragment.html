@@ -55,18 +55,22 @@
                     </div>
                 </div>
                 <div class="three wide column">
-                    <h4 class="ui inverted header ">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">bigData</a>
-                        <a href="#" class="item">bigData</a>
-                        <a href="#" class="item">bigData</a>
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <div id="newBlog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${newBlogs}" th:text="${blog.title}">bigData</a>
+                            <!--/*-->
+                            <a href="#" class="item">bigData</a>
+                            <a href="#" class="item">bigData</a>
+                            <!--*/-->
+                        </div>
                     </div>
                 </div>
                 <div class="three wide column">
                     <h4 class="ui inverted header ">联系我</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">Email: 1297752084@qq.com</a>
-                        <a href="#" class="item">QQ: 1297752084</a>
+                        <a href="#" class="item" th:text="#{index.email}">Email: 1297752084@qq.com</a>
+                        <a href="#" class="item" th:text="#{index.QQ}">QQ: 1297752084</a>
                     </div>
                 </div>
                 <div class="seven wide column">
@@ -90,6 +94,10 @@
     <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
     <script src="../static/lib/qrCode/qrcode.min.js" th:src="@{/lib/qrCode/qrcode.min.js}"></script>
     <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+        $('#newBlog-container').load(/*[[@{/footer/newBlogs}]]*/"/footer/newBlogs");
+    </script>
+
 </th:block>
 
 </body>

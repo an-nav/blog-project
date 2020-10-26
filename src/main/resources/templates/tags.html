@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
+    <!--TODO 解决 tag 无法正确排序的问题-->
     <!--导航-->
     <nav th:replace="_fragment :: menu(3)" class="ui inverted attached segment m-padded-tb-small m-shadow-small">
         <div class="ui container">
@@ -45,36 +46,24 @@
                        <h3 class="ui teal header">标签</h3>
                    </div>
                    <div class="right aligned column">
-                       共 <h2 class="ui orange header m-text-thin m-inline-block"> 12 </h2> 个
+                       共 <h2 class="ui orange header m-text-thin m-inline-block" th:text="${#arrays.length(tags)}"> 12 </h2> 个
                    </div>
                </div>
            </div>
            <!--标签展示-->
            <div class="ui attached  segment m-padded-tb-large">
-               <a href="#" target="_blank" class="ui orange basic left pointing large label m-margin-tb-tiny">
-                   方法论 <div class="detail"> 15</div>
-               </a>
-               <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">
-                   Kafka <div class="detail"> 15</div>
-               </a>
-               <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">
-                   Kafka <div class="detail"> 15</div>
-               </a>
-               <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">
-                   Kafka <div class="detail"> 15</div>
-               </a>
-               <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">
-                   Kafka <div class="detail"> 15</div>
+               <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui basic left pointing large label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'orange' : 'teal'" th:each="tag : ${tags}">
+                   <span th:text="${tag.name}">方法论</span> <div class="detail" th:text="${#arrays.length(tag.blogs)}"> 15</div>
                </a>
            </div>
 
            <div class="ui top padded attached teal segment">
-               <div class="ui  padded vertical segment m-padded-tb-large m-mobile-lr-clear">
-                   <div class="ui padded m-mobile-lr-clear vertical segment">
-                       <div class="ui mobile reversed stackable grid">
+               <div class="ui attached padded segment m-padded-tb-large" th:each="blog : ${page.content}">
+                   <div class="ui padded vertical segment">
+                       <div class="ui middle aligned mobile reversed stackable grid">
                            <div class="eleven wide column">
-                               <h3 class="ui header"> bigData </h3>
-                               <p class="m-text">
+                               <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">bigData</a> </h3>
+                               <p class="m-text" th:text="|${blog.description}....|">
                                    个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站
                                </p>
                                <div class="ui grid">
@@ -82,189 +71,51 @@
                                        <div class="eleven wide column">
                                            <div class="ui horizontal link list">
                                                <div class="item">
-                                                   <img src="https://picsum.photos/id/1014/100/100" alt="" class="ui avatar image">
-                                                   <div class="content"><a href="#" class="header m-text-thin">AnVna</a></div>
+                                                   <img src="https://picsum.photos/id/1014/100/100" th:src="${blog.user.avatar}" alt="" class="ui avatar image">
+                                                   <div class="content"><a href="#" class="header m-text-thin" th:text="${blog.user.nickname}">AnVna</a></div>
                                                </div>
                                                <div class="item">
-                                                   <i class="calendar icon"></i> 2020-10-12
+                                                   <i class="calendar icon"></i>
+                                                   <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2020-10-12</span>
                                                </div>
                                                <div class="item">
-                                                   <i class="eye icon"></i> 144
+                                                   <i class="eye icon"></i>
+                                                   <span th:text="${blog.views}">144</span>
                                                </div>
                                            </div>
                                        </div>
                                        <div class="right aligned five wide column">
-                                           <a href="#" target="_blank" class="ui teal basic m-padded-tiny label">
+                                           <a href="#" target="_blank" class="ui teal basic m-padded-tiny label" th:text="${blog.type.name}">
                                                大数据
                                            </a>
                                        </div>
                                    </div>
                                    <div class="row">
                                        <div class="column">
-                                           <a href="#" class="ui mini basic teal left pointing label m-padded-tb-tiny m-text-thin"> 方法论</a>
+                                           <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui mini basic left pointing label m-padded-tb-tiny m-text-thin" th:classappend="${tag.getId()==activeTagId} ? 'orange' : 'teal'" th:each="tag : ${blog.tags}" th:text="${tag.name}"> 方法论</a>
                                        </div>
                                    </div>
-
                                </div>
                            </div>
                            <div class="five wide column">
-                               <a href="#" target="_blank"></a>
-                               <img src="https://picsum.photos/id/1019/800/450" alt="" class="ui rounded image">
+                               <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank"></a>
+                               <img src="https://picsum.photos/id/1020/800/450" th:src="${blog.firstPicture}" alt="" class="ui rounded image">
                            </div>
                        </div>
                    </div>
-
-               </div>
-               <div class="ui  padded vertical segment m-padded-tb-large m-mobile-lr-clear">
-                   <div class="ui padded m-mobile-lr-clear vertical segment">
-                       <div class="ui mobile reversed stackable grid">
-                           <div class="eleven wide column">
-                               <h3 class="ui header"> bigData </h3>
-                               <p class="m-text">
-                                   个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站
-                               </p>
-                               <div class="ui grid">
-                                   <div class="row">
-                                       <div class="eleven wide column">
-                                           <div class="ui horizontal link list">
-                                               <div class="item">
-                                                   <img src="https://picsum.photos/id/1014/100/100" alt="" class="ui avatar image">
-                                                   <div class="content"><a href="#" class="header m-text-thin">AnVna</a></div>
-                                               </div>
-                                               <div class="item">
-                                                   <i class="calendar icon"></i> 2020-10-12
-                                               </div>
-                                               <div class="item">
-                                                   <i class="eye icon"></i> 144
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="right aligned five wide column">
-                                           <a href="#" target="_blank" class="ui teal basic m-padded-tiny label">
-                                               大数据
-                                           </a>
-                                       </div>
-                                   </div>
-                                   <div class="row">
-                                       <div class="column">
-                                           <a href="#" class="ui mini basic teal left pointing label m-padded-tb-tiny m-text-thin"> 方法论</a>
-                                       </div>
-                                   </div>
-
-                               </div>
-                           </div>
-                           <div class="five wide column">
-                               <a href="#" target="_blank"></a>
-                               <img src="https://picsum.photos/id/1019/800/450" alt="" class="ui rounded image">
-                           </div>
-                       </div>
-                   </div>
-
-               </div>
-               <div class="ui  padded vertical segment m-padded-tb-large m-mobile-lr-clear">
-                   <div class="ui padded m-mobile-lr-clear vertical segment">
-                       <div class="ui mobile reversed stackable grid">
-                           <div class="eleven wide column">
-                               <h3 class="ui header"> bigData </h3>
-                               <p class="m-text">
-                                   个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站
-                               </p>
-                               <div class="ui grid">
-                                   <div class="row">
-                                       <div class="eleven wide column">
-                                           <div class="ui horizontal link list">
-                                               <div class="item">
-                                                   <img src="https://picsum.photos/id/1014/100/100" alt="" class="ui avatar image">
-                                                   <div class="content"><a href="#" class="header m-text-thin">AnVna</a></div>
-                                               </div>
-                                               <div class="item">
-                                                   <i class="calendar icon"></i> 2020-10-12
-                                               </div>
-                                               <div class="item">
-                                                   <i class="eye icon"></i> 144
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="right aligned five wide column">
-                                           <a href="#" target="_blank" class="ui teal basic m-padded-tiny label">
-                                               大数据
-                                           </a>
-                                       </div>
-                                   </div>
-                                   <div class="row">
-                                       <div class="column">
-                                           <a href="#" class="ui mini basic teal left pointing label m-padded-tb-tiny m-text-thin"> 方法论</a>
-                                       </div>
-                                   </div>
-
-                               </div>
-                           </div>
-                           <div class="five wide column">
-                               <a href="#" target="_blank"></a>
-                               <img src="https://picsum.photos/id/1019/800/450" alt="" class="ui rounded image">
-                           </div>
-                       </div>
-                   </div>
-
-               </div>
-               <div class="ui  padded vertical segment m-padded-tb-large m-mobile-lr-clear">
-                   <div class="ui padded m-mobile-lr-clear vertical segment">
-                       <div class="ui mobile reversed stackable grid">
-                           <div class="eleven wide column">
-                               <h3 class="ui header"> bigData </h3>
-                               <p class="m-text">
-                                   个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站个人博客建站
-                               </p>
-                               <div class="ui grid">
-                                   <div class="row">
-                                       <div class="eleven wide column">
-                                           <div class="ui horizontal link list">
-                                               <div class="item">
-                                                   <img src="https://picsum.photos/id/1014/100/100" alt="" class="ui avatar image">
-                                                   <div class="content"><a href="#" class="header m-text-thin">AnVna</a></div>
-                                               </div>
-                                               <div class="item">
-                                                   <i class="calendar icon"></i> 2020-10-12
-                                               </div>
-                                               <div class="item">
-                                                   <i class="eye icon"></i> 144
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="right aligned five wide column">
-                                           <a href="#" target="_blank" class="ui teal basic m-padded-tiny label">
-                                               大数据
-                                           </a>
-                                       </div>
-                                   </div>
-                                   <div class="row">
-                                       <div class="column">
-                                           <a href="#" class="ui mini basic teal left pointing label m-padded-tb-tiny m-text-thin"> 方法论</a>
-                                       </div>
-                                   </div>
-
-                               </div>
-                           </div>
-                           <div class="five wide column">
-                               <a href="#" target="_blank"></a>
-                               <img src="https://picsum.photos/id/1019/800/450" alt="" class="ui rounded image">
-                           </div>
-                       </div>
-                   </div>
-
                </div>
            </div>
            <!-- footer-->
-           <div class="ui bottom attached segment">
-               <div class="ui middle aligned two column grid">
-                   <div class="column">
-                       <a href="#" class="ui mini teal basic button">上一页</a>
-                   </div>
-                   <div class="right aligned column">
-                       <a href="#" class="ui mini teal basic button">下一页</a>
-                   </div>
+           <<div class="ui bottom attached segment" th:if="${page.totalPages} > 1">
+           <div class="ui middle aligned two column grid">
+               <div class="column">
+                   <a th:href="@{'/tags/'+${activeTagId}(page=${page.number} - 1)}" class="ui mini teal basic button" th:unless="${page.first}">上一页</a>
+               </div>
+               <div class="right aligned column">
+                   <a th:href="@{'/tags/'+${activeTagId}(page=${page.number} + 1)}" class="ui mini teal basic button" th:unless="${page.last}">下一页</a>
                </div>
            </div>
+       </div>
        </div>
     </div>
 
